@@ -49,6 +49,7 @@ public class ClientHandler implements Runnable{
     }
 
     public void broadcastMessage(String sendingMessage) {
+        System.out.println("Sending Message : "+sendingMessage);
         try {
             for (ClientHandler clientHandler : clientHandlers) {
                 if (!clientHandler.userName.equals(userName)) {

@@ -16,12 +16,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
-import java.util.EventListener;
 import java.util.ResourceBundle;
 
 public class ClientFormController implements Initializable {
@@ -59,7 +63,6 @@ public class ClientFormController implements Initializable {
     public void sendOnAction(ActionEvent actionEvent) {
         sp_emoji.setVisible(false);
         String message = messageTextField.getText();
-        message = message.replace(":)", new String(Character.toChars(0x1F606)));
 
         if (!message.isEmpty()) {
             sendMessage(message);
@@ -103,7 +106,7 @@ public class ClientFormController implements Initializable {
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
         Label messageLbl = new Label(message);
-        messageLbl.setStyle("-fx-background-color:   #95a5a6;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         Platform.runLater(new Runnable() {
             @Override
@@ -113,11 +116,16 @@ public class ClientFormController implements Initializable {
         });
     }
 
+    public void sendImage(byte[] imageArray){
+
+    }
+
     public void sendMessage(String message) {
+
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
         Label messageLbl = new Label(message);
-        messageLbl.setStyle("-fx-background-color:  #3498db;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:  #27ae60;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         vb_main.getChildren().add(hBox);
 
@@ -137,7 +145,7 @@ public class ClientFormController implements Initializable {
     private void setEmojisToPane() {
         int EMOJI_INDEX = 0;
         for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4;  i++) {
                 Label text = new Label(new String(Character.toChars(emojis[EMOJI_INDEX++])));
                 text.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
@@ -153,4 +161,25 @@ public class ClientFormController implements Initializable {
         }
     }
 
+    public void openImageChooser(MouseEvent mouseEvent) throws IOException {
+
+        FileChooser fileChooser = new FileChooser();
+//        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image","*.jpg;*.png;*.jpeg;*.gif;"));
+        fileChooser.setTitle("Select image to send.");
+        File file = fileChooser.showOpenDialog(new Stage());
+        System.out.println(file.getParent());
+        BufferedImage bufferedImage = ImageIO.read(new File(file.getPath()));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        String fileName = file.getName();
+        String extension = "";
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i+1);
+        }
+
+        ImageIO.write(bufferedImage,extension,bos);
+        byte[] data = bos.toByteArray();
+        client.clientSendImage(data,extension,file.getName());
+
+    }
 }

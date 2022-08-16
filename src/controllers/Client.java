@@ -2,8 +2,12 @@ package controllers;
 
 import javafx.scene.layout.VBox;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Client {
@@ -23,6 +27,23 @@ public class Client {
             closeEverything(socket, bufferedWriter, bufferedReader);
         }
 
+
+    }
+
+    public void clientSendImage(byte[] imageArray,String format,String fileName){
+
+        String imageString = Arrays.toString(imageArray);
+
+        try {
+
+            bufferedWriter.write(imageString);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            closeEverything(socket,bufferedWriter,bufferedReader);
+        }
 
     }
 

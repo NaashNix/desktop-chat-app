@@ -28,7 +28,7 @@
       </Label>
       <TextField fx:id="messageTextField" layoutX="28.0" layoutY="348.0" prefHeight="32.0" prefWidth="443.0" promptText="Send To Chat..." style="-fx-font-family: Noto Color Emoji;" />
       <Button layoutX="479.0" layoutY="348.0" mnemonicParsing="false" onAction="#sendOnAction" prefHeight="32.0" prefWidth="98.0" text="SEND" />
-      <ImageView fitHeight="29.0" fitWidth="36.0" layoutX="432.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="29.0" fitWidth="36.0" layoutX="432.0" layoutY="350.0" onMouseClicked="#openImageChooser" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-camera-50.png" />
          </image>
