@@ -9,6 +9,10 @@
 > Users can enter a username as it will display to others in group chat.
 > Can use letters number and characters for the username.
 
+<br>
+<br>
+<br>
+
 #### Chat Interface
 <img src="./src/assets/ss2.png" width="602" alt="Screenshot One" >
 
