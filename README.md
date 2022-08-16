@@ -4,14 +4,13 @@
 * This is course work for the Internet Network Programming Module.
 
 #### Login Page
-<img src="./src/assets/ss1.png" width="345" alt="Screenshot One" align="right">
+<img src="./src/assets/ss1.png" width="345" alt="Screenshot One">
 
 > Users can enter a username as it will display to others in group chat.
 > Can use letters number and characters for the username.
 
 <br>
-<br>
-<br>
+
 
 #### Chat Interface
 <img src="./src/assets/ss2.png" width="602" alt="Screenshot One" >
